@@ -18,12 +18,12 @@ const updateMembers = function(type,id,current){
   let final = current
   let outOf = type === 'remove' ? current.members : current.persons
 
+  let newPersons = reject(curriedFilterPerson(id),outOf)
+
   let person = compose(
     head,
     filter(curriedGetPerson(id))
   )(outOf)
-
-  let newPersons = reject(curriedFilterPerson(id),outOf)
 
   if(type === 'remove'){
     final.persons.push(person)
@@ -32,7 +32,6 @@ const updateMembers = function(type,id,current){
     final.members.push(person)
     final.persons = newPersons
   }
-
   return final
 }
 
