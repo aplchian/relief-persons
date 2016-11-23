@@ -61,20 +61,21 @@ const App = React.createClass({
         filter(getPerson(id))
       )(this.state.persons)
       let newPersons = reject(filterPersons(id),this.state.persons)
-      let team = current.members.push(person)
+      current.members.push(person)
       current.persons = newPersons
       this.setState({current})
     }
   },
   removeMember(id){
     return e => {
+      e.preventDefault()
       let current = this.state
       let person = compose(
         head,
         filter(getPerson(id))
       )(this.state.members)
       let newPersons = reject(filterPersons(id),this.state.members)
-      let members = current.persons.push(person)
+      current.persons.push(person)
       current.members = newPersons
       this.setState({current})
     }
