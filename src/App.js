@@ -1,6 +1,6 @@
 const React = require('react')
 const {reject,filter,compose,head,append,path} = require('ramda')
-const {getPerson, filterPersons} = require('./helpers/helpers')
+const {getPerson, filterPersons, updateMembers} = require('./helpers/helpers')
 
 const App = React.createClass({
   getInitialState: function() {
@@ -55,28 +55,14 @@ const App = React.createClass({
   addMember(id){
     return e => {
       e.preventDefault()
-      let current = this.state
-      let person = compose(
-        head,
-        filter(getPerson(id))
-      )(this.state.persons)
-      let newPersons = reject(filterPersons(id),this.state.persons)
-      current.members.push(person)
-      current.persons = newPersons
+      let current = updateMembers('add',id,this.state)
       this.setState({current})
     }
   },
   removeMember(id){
     return e => {
       e.preventDefault()
-      let current = this.state
-      let person = compose(
-        head,
-        filter(getPerson(id))
-      )(this.state.members)
-      let newPersons = reject(filterPersons(id),this.state.members)
-      current.persons.push(person)
-      current.members = newPersons
+      let current = updateMembers('remove',id,this.state)
       this.setState({current})
     }
   },
